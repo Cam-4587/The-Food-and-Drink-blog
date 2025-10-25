@@ -4,10 +4,12 @@
     <h1>Food and Drink blog</h1>
     <p>Welcome to the food and drink blog, here you can post blogs about recipes <br> and drinks as well as commenting
         and replying to others blog posts.</p>
+    {% if not user.is_authenticated %}
     <p> If you would like to Sign up to this blog so that you can create<br> blogs and add comments to other users blog
         posts sign up below</p>
     <div class="about-us-button">
-        <a href="#">Sign Up Here</a>
+        <a href="{% url 'account_signup' %}">Sign Up Here</a>
     </div>
+    {% endif %}
 </section>
 {% endblock %}
