@@ -65,9 +65,12 @@ footer{
   color: #fff;
 }
 
+/* Blog list page styling */
 
-/* Login form */
-
-#loginform{
-    display:none;
+.card-home-page {
+  width: 25rem;
+  padding: 25px;
+  margin: 40px;
+  box-shadow: 5px 10px 10px 5px #888888;
 }
+

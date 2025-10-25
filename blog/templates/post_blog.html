@@ -1,9 +1,18 @@
 {% extends 'base.html' %}
 {% block content %}
-    <div class="post card p-4 mb-4">
-        <h2>{{ post.title }}</h2>
-        <p><em>By {{ post.author }} on {{ post.published_date }}</em></p>
-        <p>{{ post.intro }}</p>
-        <div>{{ post.content|linebreaks }}</div>
+<section>
+    <div class="container-fluid p-4 mt-4 d-flex justify-content-center">
+        <div class="title col-12 col-md-8 text-center mb-4">
+            <div class="card w-100">
+                <h2 class="align-center mbr-bold mbr-white mbr-fonts-style display-1">{{ post.title }}
+                </h2>
+                <p><em>By {{ post.author }} on {{ post.published_date }}</em></p>
+                <h3 class="mbr-section-subtitle align-center mbr-light mbr-white pb-3 mbr-fonts-style display-5">
+                    {{ post.intro }}
+                </h3>
+                <div>{{ post.content }}</div>
+            </div>
+        </div>
     </div>
+</section>
 {% endblock %}

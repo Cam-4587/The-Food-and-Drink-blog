@@ -1,13 +1,21 @@
 {% extends 'base.html' %}
 {% block content %}
+<!--Main Content-->
 {% for post in object_list %}
-    <div class="post">
-        <h2>{{ post.title }}</h2>
-        <p><em>By {{ post.author }} on {{ post.published_date }}</em></p>
-        <p>{{ post.intro }}</p>
-         <a href="{% url 'post_blog' post.slug %}" class="btn btn-dark">Click here for more !!!</a>
+<div class="container-fluid">
+    <div class="row d-flex justify-content-around">
+        <div class="card  p-3 mt-3" style="width: 20rem;">
+            <h5>Author: {{post.author}}</h5>
+            <p><em>{{ post.published_date }}</em></p>
+            <img src="https://res.cloudinary.com/dni2ihlvf/image/upload/v1742319615/ohbwtydahgdn1ak5ivpo.jpg"
+                class="card-img-top rounded" alt="image">
+            <div class="card-body">
+                <h5 class="card-title">{{post.title}}</h5>
+                <p class="card-text">{{post.intro}}</p>
+                <a href="{% url 'post_blog' post.slug %}" class="btn btn-success">Click here for more !!!</a>
+            </div>
+        </div>
     </div>
-{% empty %}
-    <p>No blog posts available.</p>
+</div>
 {% endfor %}
 {% endblock %}
