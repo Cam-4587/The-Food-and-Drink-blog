@@ -17,9 +17,21 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
+from django.contrib.auth.decorators import login_required
+from ckeditor_uploader import views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("accounts/", include("allauth.urls")),
     path("", include("blog.urls")), 
+        path(
+        'ckeditor/upload/',
+        login_required(views.upload),
+        name='ckeditor_upload'
+    ),
+    path(
+        'ckeditor/browse/',
+        login_required(views.browse),
+        name='ckeditor_browse'
+    ),
 ]
