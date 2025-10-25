@@ -1,47 +1,82 @@
-{% extends "account/base_entrance.html" %}
+{% extends "base.html" %}
+{% load static %}
 {% load allauth i18n %}
 {% block head_title %}
 {% trans "Signup" %}
 {% endblock head_title %}
-<section id="signupcontainer"> 
 {% block content %}
-    {% element h1 %}
-        {% trans "Sign Up" %}
-    {% endelement %}
-    {% setvar link %}
-        <a href="{{ login_url }}">
-        {% endsetvar %}
-        {% setvar end_link %}
-        </a>
-    {% endsetvar %}
-    {% element p %}
-        {% blocktranslate %}Already have an account? Then please {{ link }}sign in{{ end_link }}.{% endblocktranslate %}
-    {% endelement %}
-    {% if not SOCIALACCOUNT_ONLY %}
-        {% url 'account_signup' as action_url %}
-        {% element form form=form method="post" action=action_url tags="entrance,signup" %}
-            {% slot body %}
-                {% csrf_token %}
-                {% element fields form=form unlabeled=True %}
-                {% endelement %}
-                {{ redirect_field }}
-            {% endslot %}
-            {% slot actions %}
-                {% element button tags="prominent,signup" type="submit" %}
-                    {% trans "Sign Up" %}
-                {% endelement %}
-            {% endslot %}
-        {% endelement %}
-    {% endif %}
-    {% if PASSKEY_SIGNUP_ENABLED %}
-        {% element hr %}
-        {% endelement %}
-        {% element button href=signup_by_passkey_url tags="prominent,signup,outline,primary" %}
-            {% trans "Sign up using a passkey" %}
-        {% endelement %}
-    {% endif %}
-    {% if SOCIALACCOUNT_ENABLED %}
-        {% include "socialaccount/snippets/login.html" with page_layout="entrance" %}
-    {% endif %}
+<!-- Section: Design Block -->
+<section>
+    <div class="container px-md-5 text-center text-lg-start d-flex justify-content-center">
+        <div class="row gx-lg-5 align-items-center mb-5">
+            <div class="col-lg-6 mb-5 mb-lg-0" style="z-index: 10">
+                <div class="d-flex flex-row align-items-center">
+                <img src="{% static 'images/fork-and-knife.avif' %}" alt="Logo" width="100" height="90"
+                    class="d-inline-block align-text-top mb-4">
+                <h1 class="my-5 display-5 fw-bold ls-tight">
+                    Food and Drink Blog<br />
+                </h1>
+                </div>
+                <h5 class="mb-4 opacity-70 text-center">
+                    Sign up now to explore a world of culinary delights, share your favorite recipes, and connect with fellow food enthusiasts!
+                </h5>
+                <div class="w-100 d-flex justify-content-center">
+                <img src="{% static 'images/signup_image.webp'%}"alt="Sign up image" width="450">
+                </div>
+            </div>
+
+            <div class="col-lg-6 mb-5 mb-lg-0 position-relative">
+                <div id="radius-shape-1" class="position-absolute rounded-circle shadow-5-strong"></div>
+                <div id="radius-shape-2" class="position-absolute shadow-5-strong"></div>
+
+                <div class="bg-glass">
+                    <div>
+                        <form id="signup_form" method="post" action="{% url 'account_signup' %}" class="form-control-lg">
+                            {% csrf_token %}
+
+                            <div class="form-group mb-3">
+                                <label for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+                                {{ form.username }}
+                                {% if form.username.errors %}
+                                <div class="text-danger">{{ form.username.errors }}</div>
+                                {% endif %}
+                            </div>
+
+
+
+                            <div class="form-group mb-3">
+                                <label for="{{ form.password1.id_for_label }}">{{ form.password1.label }}</label>
+                                {{ form.password1 }}
+                                <div class="form-text small py-3">
+                                    {{ form.password1.help_text|safe }}
+                                </div>
+                                {% if form.password1.errors %}
+                                <div class="text-danger">{{ form.password1.errors }}</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="{{ form.password2.id_for_label }}">{{ form.password2.label }}</label>
+                                {{ form.password2 }}
+                                {% if form.password2.errors %}
+                                <div class="text-danger">{{ form.password2.errors }}</div>
+                                {% endif %}
+                            </div>
+
+                            {% if redirect_field_value %}
+                            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                            {% endif %}
+
+                            <button class="btn btn-success btn-lg ms-2 d-flex justify-content-center text-center mt-3" type="submit">
+                                {% trans "Sign Up" %} &raquo;</button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
 </section>
+<!-- Section: Design Block -->
+
 {% endblock content %}

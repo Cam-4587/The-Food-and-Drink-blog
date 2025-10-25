@@ -61,7 +61,13 @@ footer{
 }
 
 .about-us-button a:hover {
-  background-color: #a52a2a;
+  background-color: #3bad3b;
   color: #fff;
 }
 
+
+/* Login form */
+
+#loginform{
+    display:none;
+}
