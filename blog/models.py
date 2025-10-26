@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from ckeditor_uploader.fields import RichTextUploadingField
+from cloudinary.models import CloudinaryField
 # Create your models here.
 
 STATUS = ((0, "Draft"), (1, "Published"))
@@ -10,8 +12,11 @@ class Post(models.Model):
     author = models.ForeignKey(
         User, on_delete=models.CASCADE, related_name="blog_posts"
     )
+    image = CloudinaryField(
+        'image', default='placeholder', blank=True, null=True
+    )
     intro = models.CharField(blank=True, max_length=150)
-    content = models.TextField(null=True, blank=True)
+    content = RichTextUploadingField(blank=True, null=True)
     published_date = models.DateTimeField(auto_now_add=True)
     created_on = models.DateTimeField(auto_now_add=True)
     updated_on = models.DateTimeField(auto_now=True)

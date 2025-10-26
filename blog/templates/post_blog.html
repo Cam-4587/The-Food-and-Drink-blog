@@ -1,18 +1,29 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
 <section>
-    <div class="container-fluid p-4 mt-4 d-flex justify-content-center">
-        <div class="title col-12 col-md-8 text-center mb-4">
-            <div class="card w-100">
-                <h2 class="align-center mbr-bold mbr-white mbr-fonts-style display-1">{{ post.title }}
+    <div class="container-fluid p-4 mt-3 d-flex justify-content-center">
+        <div class="title col-12 col-md-8 mb-4">
+            <div class="card">
+                <h2 class="align-center mbr-bold mbr-white mbr-fonts-style display-1 text-center">{{ post.title }}
                 </h2>
-                <p><em>By {{ post.author }} on {{ post.published_date }}</em></p>
-                <h3 class="mbr-section-subtitle align-center mbr-light mbr-white pb-3 mbr-fonts-style display-5">
+                <p class="text-center"><em>By {{ post.author }} on {{ post.published_date }}</em></p>
+                <h3 class="display-5 fs-2 text-center">
                     {{ post.intro }}
                 </h3>
-                <div>{{ post.content }}</div>
+                <div class="w-100 d-flex flex-column align-items-center">
+                    <div class="col-md-8 align-items-center text-center">
+                        {% if "placeholder" in post.image.url %}
+                        <img src="{% static 'images/signup_image.webp' %}" alt="placeholder image" loading="lazy">
+                        {% else %}
+                        <img class="img-fluid rounded" src="{{ post.image.url }}" alt="blog post image" loading="lazy">
+                        </figure>
+                    </div>
+                </div>
+                {% endif %}
+                <hr class="border border-secondary border-3 opacity-75">
+                <div class="p-5">{{ post.content | safe }}</div>
             </div>
         </div>
-    </div>
 </section>
 {% endblock %}
