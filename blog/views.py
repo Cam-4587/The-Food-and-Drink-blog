@@ -30,3 +30,6 @@ def post_blog(request, slug):
         "post_blog.html",
         context
     )
+
+def contact(request):
+    return render(request, "contact.html") 
