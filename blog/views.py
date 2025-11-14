@@ -1,6 +1,9 @@
 from django.shortcuts import render, get_object_or_404
+from django.contrib import messages
+from django.shortcuts import redirect
 from django.views import generic
 from .models import Post
+from .forms import CreateBlogPost
 
 # Create your views here.
 
@@ -31,5 +34,24 @@ def post_blog(request, slug):
         context
     )
 
+def editpost(request, slug):
+    """ Edits Users blog post and redirects user back to their blog post """
+    post = get_object_or_404(Post, slug=slug)
+
+    # Check if the current user is the author of the post
+    if post.author != request.user:
+        messages.error(
+            request, "You do not have permission to edit this post.")
+        return redirect('home')
+
+    if request.method == 'POST':
+        form = CreateBlogPost(request.POST, request.FILES, instance=post)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form = CreateBlogPost(instance=post)
+    return render(request, 'edit_post.html', {'form': form, 'post': post})
+
 def contact(request):
-    return render(request, "contact.html") 
+        return render(request, "contact.html") 

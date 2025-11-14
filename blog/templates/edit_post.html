@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<!--Post editing form-->
+<div class="w-100vw h-100vh d-flex flex-column align-items-center justify-content-center mt-3 mb-3" >
+    <h1>Edit Post</h1>
+    <form method="POST" enctype="multipart/form-data" class="w-75 bg-light border border-dark p-4 rounded border border-5 ">
+        {% csrf_token %}
+        {{ form.media }}
+        {{ form.as_p }}
+        <button class="btn btn-secondary" type="submit">Save changes</button>
+    </form>
+</div>
+{% endblock %}

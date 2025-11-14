@@ -17,12 +17,17 @@
                         <img src="{% static 'images/signup_image.webp' %}" alt="placeholder image" loading="lazy">
                         {% else %}
                         <img class="img-fluid rounded" src="{{ post.image.url }}" alt="blog post image" loading="lazy">
-                        </figure>
+                        {% endif %}
                     </div>
                 </div>
-                {% endif %}
                 <hr class="border border-secondary border-3 opacity-75">
                 <div class="p-5">{{ post.content | safe }}</div>
+                {% if user == post.author %}
+                <div class="w-100 d-flex justify-content-center mb-4 gap-3">
+                    <div class="btn btn-danger">Delete Post</div>
+                    <a href="{% url 'edit-post' slug=post.slug %}" class="btn btn-warning text-decoration-none text-dark">Edit Post</a>
+                </div>
+                {% endif %}
             </div>
         </div>
 </section>
