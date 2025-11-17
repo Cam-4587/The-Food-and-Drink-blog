@@ -2,32 +2,6 @@
 {% load static %}
 {% block content %}
 <!--Main Content-->
-<!-- <div class="container-fluid">
-    <div class="container mt-5">
-        <div class="row d-flex justify-content-center">
-            {% for post in object_list %}
-            <div class="card p-3 m-3" style="width: 20rem;">
-                <h5>Author: {{post.author}}</h5>
-                <p><em>{{ post.published_date }}</em></p>
-                {% if "placeholder" in post.image.url %}
-                <div class="w-100">
-                    <img src="{% static 'images/signup_image.webp' %}" alt="Card image cap">
-                    {% else %}
-                    <img src="{{ post.image.url }}" alt="{{ post.title }}" loading="lazy">
-                    {% endif %}
-                    <div class="card-body">
-                        <h5 class="card-title">{{post.title}}</h5>
-                        <p class="card-text">{{post.intro}}</p>
-                        <a href="{% url 'post_blog' post.slug %}" class="btn btn-success">Click here for more !!!</a>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-</div> -->
-
-<!-- Blog 6 - Bootstrap Brain Component -->
 <section class="py-3 py-md-5">
     <div class="container overflow-hidden">
         <div class="row gy-4 gy-xxl-5">
