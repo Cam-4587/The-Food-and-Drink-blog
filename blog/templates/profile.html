@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<!-- Pending message for when Users profile is pending approval by an admin-->
+
+{% if profile.bio and profile.status == 0 %}
+<main class="main-content">
+    <div class="d-flex flex-column">
+        <h1><strong>Your Profile is Pending Review</strong></h1>
+    </div>
+</main>
+{% endif %}
+
+<!--End of Pending message-->
+
+<!-- User's authorized and published Profile-->
+
+{% if profile.bio and profile.status == 1 %}
+<div class="profile-container">
+    <div class="d-flex flex-column align-items-center">
+        <div class="d-flex flex-column align-items-center">
+
+            <!--Profile image and Username-->
+
+            {% if "nobody" in profile.image.url %}
+            <img src="{% static 'images/nobody.jpg' %}" alt="defualt image"
+                class="profile-img shadow-lg rounded-3 img-thumbnail">
+            {% else %}
+            <img src="{{ profile.image.url}}" alt="profile image"
+                class="profile-img shadow-lg rounded-3 img-thumbnail">
+            {% endif %}
+            <h1>{{ profile.user }}</h1>
+
+            <!--Buttons to Edit and delete the Users profile-->
+
+            {% if user %}
+            <div class="d-flex flex-row gap-3 justify-content-center">
+                    <a class="text-light text-decoration-none btn btn-dark" href="{% url 'update-profile' %}"> Edit Profile here
+                    </a>
+                    <a class="text-light text-decoration-none btn btn-dark" href="{% url 'delete-profile' %}"> Delete Profile
+                    </a>
+            </div>
+            {% endif %}
+
+        <!-- User Profile's bio -->
+
+        </div>
+        <div class="profile-txt mt-3">
+            {{ profile.bio| safe }}
+        </div>
+
+        <!--Indication of when the Profile was created and last updated-->
+
+        <div class="d-flex justify-content-center gap-3 text-center p-3">
+            <div>
+                <p><strong><em>Created at</em></strong></p>
+                <em>{{ profile.created_on }}</em>
+            </div>
+            <div>
+                <p><strong><em>Last Updated at</em></strong></p>
+                <em>{{ profile.updated_on }}</em>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!--  End of User's authorized and published Profile-->
+
+
+<!-- Form to create users profile if one isn't created already-->
+
+{% if not profile.bio %}
+<div class="w-100vw h-100vh d-flex flex-column align-items-center justify-content-center mt-3 mb-3">
+    <h1>Add your Profile here</h1>
+    <form class="w-75 bg-light border border-dark p-4 rounded border border-5" method="post"
+        enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ profile_form.media }}
+        <div class="mb-3">
+            <label for="id_image" class="form-label">Image:</label>
+            {{ profile_form.image }}
+        </div>
+        <div class="mb-3">
+            <label for="id_image" class="form-label">Bio:</label>
+            {{ profile_form.bio }}
+        </div>
+        <button type="submit" class="btn btn-dark btn-lg">Save Changes</button>
+    </form>
+</div>
+
+<!-- End of profile form-->
+{% endif %}
+{% endblock %}

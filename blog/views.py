@@ -2,8 +2,8 @@ from django.shortcuts import render, get_object_or_404
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.views import generic
-from .models import Post
-from .forms import CreateBlogPost
+from .models import Post, Profile
+from .forms import CreateBlogPost, UpdateProfileForm
 
 # Create your views here.
 
@@ -55,3 +55,30 @@ def editpost(request, slug):
 
 def contact(request):
         return render(request, "contact.html") 
+
+
+def profile(request):
+    """
+    Renders the Profile page
+    """
+    profile, created = Profile.objects.get_or_create(user=request.user)
+    profile_form = UpdateProfileForm(instance=profile)
+
+    if request.method == "POST":
+        profile_form = UpdateProfileForm(
+            request.POST, request.FILES, instance=profile
+        )
+        if profile_form.is_valid():
+            profile_form.save()
+            messages.success(
+                request, 'Your profile has been created and is pending review'
+            )
+            return redirect('users-profile')
+
+    context = {
+        "profile": profile,
+        "profile_form": profile_form,
+        "profile_created": not created,
+    }
+
+    return render(request, "profile.html", context)

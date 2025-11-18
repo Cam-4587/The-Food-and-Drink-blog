@@ -44,6 +44,9 @@
                         <a class="nav-link" href="#">Pricing</a>
                     </li>
                     {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'users-profile' %}">{{ user }}</a>
+                    </li>
                     <li>
                         <a class="nav-link {% if request.path == logout_url %}active{% endif %}" aria-current="page"
                             href="{% url 'account_logout' %}">Logout</a>
@@ -64,10 +67,12 @@
     </nav>
 
     {% for message in messages %}
-    <div class="alert alert-message alert-{{ message.tags }}" role="alert">
-        {{ message | safe }}
-        <button type="button" class="btn-close alert-close-button col-md-8" data-bs-dismiss="alert"
-            aria-label="Close"></button>
+    <div class="w-100 d-flex justify-content-center mt-3">
+        <div class="alert text-center col-4 alert-message alert-{{ message.tags }}" role="alert">
+            {{ message | safe }}
+            <button type="button" class="btn-close alert-close-button col-md-8" data-bs-dismiss="alert"
+                aria-label="Close"></button>
+        </div>
     </div>
     {% endfor %}
     {% block content %}
